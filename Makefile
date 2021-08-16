@@ -10,6 +10,9 @@ install: clean
 run-dist:
 	./build/install/app/bin/app
 
+start:
+	./gradlew run
+
 check-updates:
 	./gradlew dependencyUpdates
 

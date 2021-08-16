@@ -18,12 +18,21 @@ application {
   mainClass = 'hexlet.code.App'
 }
 
+sourceCompatibility = '11'
+
 compileJava {
   options.release = 15
 }
 
 run{
   standardInput = System.in
+}
+
+dependencies {
+  compileOnly 'org.projectlombok:lombok:1.18.20'
+	annotationProcessor 'org.projectlombok:lombok:1.18.20'
+  implementation 'info.picocli:picocli:4.6.1'
+  annotationProcessor 'info.picocli:picocli-codegen:4.6.1'
 }
 
 group = 'hexlet.code'
