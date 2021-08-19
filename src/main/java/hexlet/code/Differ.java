@@ -40,13 +40,17 @@ class Differ {
   private static void addToDiff(String key, Map<String, Object> dicOne, Map<String, Object> dicTwo,
       Map<String, Map<String, Object>> diff) {
     if (!dicOne.containsKey(key) && dicTwo.containsKey(key)) {
-      diff.put(key, makeNodeDiff("added", null, dicTwo.get(key)));
+      final Map<String, Object> nodeDiff = makeNodeDiff("added", null, dicTwo.get(key));
+      diff.put(key, nodeDiff);
     } else if (dicOne.containsKey(key) && !dicTwo.containsKey(key)) {
-      diff.put(key, makeNodeDiff("deleted", dicOne.get(key), null));
+      final Map<String, Object> nodeDiff = makeNodeDiff("deleted", dicOne.get(key), null);
+      diff.put(key, nodeDiff);
     } else if (!dicOne.get(key).equals(dicTwo.get(key))) {
-      diff.put(key, makeNodeDiff("changed", dicOne.get(key), dicTwo.get(key)));
+      final Map<String, Object> nodeDiff = makeNodeDiff("changed", dicOne.get(key), dicTwo.get(key));
+      diff.put(key, nodeDiff);
     } else {
-      diff.put(key, makeNodeDiff("unchanged", dicOne.get(key), null));
+      final Map<String, Object> nodeDiff = makeNodeDiff("unchanged", dicOne.get(key), null);
+      diff.put(key, nodeDiff);
     }
   }
 
@@ -76,10 +80,10 @@ class Differ {
           break;
       }
     };
-    result.add("{");
     keys.stream().forEach(renderDiff);
-    result.add("}");
-    return result.stream().collect(Collectors.joining("\n"));
+    return result.stream().collect(
+        Collectors.joining(System.lineSeparator(), "{" + System.lineSeparator(),
+            System.lineSeparator() + "}"));
   }
 
   public static String generate(String filePath1, String filePath2) throws IOException, JsonParseException {

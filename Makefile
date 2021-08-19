@@ -1,8 +1,9 @@
 clean:
 	./gradlew clean
 
-build: clean
-	./gradlew build
+.PHONY: build
+build: 
+	./gradlew clean build
 
 install: clean
 	./gradlew install
@@ -18,3 +19,6 @@ check-updates:
 
 lint:
 	./gradlew checkstyleMain
+
+test:
+	./gradlew test
