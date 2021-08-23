@@ -1,8 +1,6 @@
 package hexlet.code;
 
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.Set;
@@ -14,19 +12,10 @@ import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 class Differ {
   private static <T> Set<String> getDicKeys(Map<String, T> dic) {
     return dic.entrySet().stream().map(en -> en.getKey()).collect(Collectors.toCollection(TreeSet::new));
-  }
-
-  public static Map<String, Object> parser(String filePath) throws IOException, JsonParseException {
-    final Path file1Path = Paths.get(filePath);
-    final ObjectMapper objectMapper = new ObjectMapper();
-    return objectMapper.readValue(file1Path.toFile(), new TypeReference<Map<String, Object>>() {
-    });
   }
 
   private static Map<String, Object> makeNodeDiff(String type, Object before, Object after) {
@@ -87,8 +76,8 @@ class Differ {
   }
 
   public static String generate(String filePath1, String filePath2) throws IOException, JsonParseException {
-    final Map<String, Object> fileData1 = Differ.parser(filePath1);
-    final Map<String, Object> fileData2 = Differ.parser(filePath2);
+    final Map<String, Object> fileData1 = new Parser(filePath1).parse();
+    final Map<String, Object> fileData2 = new Parser(filePath2).parse();
 
     final Set<String> keys = getDicKeys(fileData1);
     keys.addAll(getDicKeys(fileData2));
