@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 
 class DifferTest {
   @Test
-  void testDiffSimpleJson() throws IOException {
+  void testDiffSimpleJsonToStylish() throws IOException {
     final String filePath1 = "src/test/resources/fixtures/file1-simple.json";
     final String filePath2 = "src/test/resources/fixtures/file2-simple.json";
     final String expectedFilepath = "src/test/resources/expected/stylish-simple.txt";
@@ -22,7 +22,7 @@ class DifferTest {
   }
 
   @Test
-  void testDiffSimpleYaml() throws IOException {
+  void testDiffSimpleYamlToStylish() throws IOException {
     final String filePath1 = "src/test/resources/fixtures/file1-simple.yaml";
     final String filePath2 = "src/test/resources/fixtures/file2-simple.yaml";
     final String expectedFilepath = "src/test/resources/expected/stylish-simple.txt";
@@ -33,7 +33,7 @@ class DifferTest {
   }
 
   @Test
-  void testDiffNestedJson() throws IOException {
+  void testDiffNestedJsonToStylish() throws IOException {
     final String filePath1 = "src/test/resources/fixtures/file1-nested.json";
     final String filePath2 = "src/test/resources/fixtures/file2-nested.json";
     final String expectedFilepath = "src/test/resources/expected/stylish-nested.txt";
@@ -44,7 +44,7 @@ class DifferTest {
   }
 
   @Test
-  void testDiffNestedYaml() throws IOException {
+  void testDiffNestedYamlToStylish() throws IOException {
     final String filePath1 = "src/test/resources/fixtures/file1-nested.yaml";
     final String filePath2 = "src/test/resources/fixtures/file2-nested.yaml";
     final String expectedFilepath = "src/test/resources/expected/stylish-nested.txt";
@@ -95,6 +95,50 @@ class DifferTest {
     final Path expectedPath = Paths.get(expectedFilepath);
     final String expected = Files.readString(expectedPath);
     final String actual = Differ.generate(filePath1, filePath2, "plain");
+    assertEquals(expected, actual + System.lineSeparator());
+  }
+
+  @Test
+  void testDiffSimpleJsonToJson() throws IOException {
+    final String filePath1 = "src/test/resources/fixtures/file1-simple.json";
+    final String filePath2 = "src/test/resources/fixtures/file2-simple.json";
+    final String expectedFilepath = "src/test/resources/expected/json-simple.txt";
+    final Path expectedPath = Paths.get(expectedFilepath);
+    final String expected = Files.readString(expectedPath);
+    final String actual = Differ.generate(filePath1, filePath2, "json");
+    assertEquals(expected, actual + System.lineSeparator());
+  }
+
+  @Test
+  void testDiffSimpleYamlToJson() throws IOException {
+    final String filePath1 = "src/test/resources/fixtures/file1-simple.yaml";
+    final String filePath2 = "src/test/resources/fixtures/file2-simple.yaml";
+    final String expectedFilepath = "src/test/resources/expected/json-simple.txt";
+    final Path expectedPath = Paths.get(expectedFilepath);
+    final String expected = Files.readString(expectedPath);
+    final String actual = Differ.generate(filePath1, filePath2, "json");
+    assertEquals(expected, actual + System.lineSeparator());
+  }
+
+  @Test
+  void testDiffNestedJsonToJson() throws IOException {
+    final String filePath1 = "src/test/resources/fixtures/file1-nested.json";
+    final String filePath2 = "src/test/resources/fixtures/file2-nested.json";
+    final String expectedFilepath = "src/test/resources/expected/json-nested.txt";
+    final Path expectedPath = Paths.get(expectedFilepath);
+    final String expected = Files.readString(expectedPath);
+    final String actual = Differ.generate(filePath1, filePath2, "json");
+    assertEquals(expected, actual + System.lineSeparator());
+  }
+
+  @Test
+  void testDiffNestedYamlToJson() throws IOException {
+    final String filePath1 = "src/test/resources/fixtures/file1-nested.yaml";
+    final String filePath2 = "src/test/resources/fixtures/file2-nested.yaml";
+    final String expectedFilepath = "src/test/resources/expected/json-nested.txt";
+    final Path expectedPath = Paths.get(expectedFilepath);
+    final String expected = Files.readString(expectedPath);
+    final String actual = Differ.generate(filePath1, filePath2, "json");
     assertEquals(expected, actual + System.lineSeparator());
   }
 }

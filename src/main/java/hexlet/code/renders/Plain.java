@@ -14,7 +14,6 @@ import hexlet.code.renders.interfaces.RenderInterface;
 public final class Plain implements RenderInterface {
   private Object getNodeValue(Map<String, Object> node, String key) {
     final Object value = node.get(key);
-    //System.out.println(value == null ? value : value.getClass());
     final boolean isComplex = value instanceof ArrayList || value instanceof HashMap;
     return isComplex ? "[complex value]" : value;
   }

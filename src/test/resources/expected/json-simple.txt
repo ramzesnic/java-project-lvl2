@@ -1,0 +1,1 @@
+{"follow":{"before":false,"after":null,"type":"deleted"},"host":{"before":"hexlet.io","after":null,"type":"unchanged"},"proxy":{"before":"123.234.53.22","after":null,"type":"deleted"},"timeout":{"before":50,"after":20,"type":"changed"},"verbose":{"before":null,"after":true,"type":"added"}}

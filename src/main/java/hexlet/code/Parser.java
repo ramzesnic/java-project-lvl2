@@ -15,7 +15,7 @@ final class Parser {
   private ObjectMapper objectMapper;
   private Path filePath;
 
-  private Parser(String fPath) throws IOException {
+  private Parser(String fPath) {
   }
 
   public static Parser getParser(String fPath) throws IOException {
