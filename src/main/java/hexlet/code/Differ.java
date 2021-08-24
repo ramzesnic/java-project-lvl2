@@ -47,7 +47,7 @@ public class Differ {
     return Render.getRender(format).render(diff);
   }
 
-  public static String generate(String filePath1, String filePath2) throws IOException, JsonParseException {
+  public static String generate(String filePath1, String filePath2) throws IOException {
     final String defaultFormat = "stylish";
     return generate(filePath1, filePath2, defaultFormat);
   }
