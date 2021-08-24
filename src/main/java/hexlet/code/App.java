@@ -28,7 +28,7 @@ public class App implements Callable<Integer> {
   @Override
   public final Integer call() {
     try {
-      final String diff = Differ.generate(filePath1, filePath2);
+      final String diff = Differ.generate(filePath1, filePath2, format);
       System.out.println(diff);
 
     } catch (JsonParseException e) {

@@ -17,7 +17,7 @@ class DifferTest {
     final String expectedFilepath = "src/test/resources/expected/stylish-simple.txt";
     final Path expectedPath = Paths.get(expectedFilepath);
     final String expected = Files.readString(expectedPath);
-    final String actual = Differ.generate(filePath1, filePath2);
+    final String actual = Differ.generate(filePath1, filePath2, "stylish");
     assertEquals(expected, actual + System.lineSeparator());
   }
 
@@ -28,7 +28,29 @@ class DifferTest {
     final String expectedFilepath = "src/test/resources/expected/stylish-simple.txt";
     final Path expectedPath = Paths.get(expectedFilepath);
     final String expected = Files.readString(expectedPath);
-    final String actual = Differ.generate(filePath1, filePath2);
+    final String actual = Differ.generate(filePath1, filePath2, "stylish");
+    assertEquals(expected, actual + System.lineSeparator());
+  }
+
+  @Test
+  void testDiffNestedJson() throws IOException {
+    final String filePath1 = "src/test/resources/fixtures/file1-nested.json";
+    final String filePath2 = "src/test/resources/fixtures/file2-nested.json";
+    final String expectedFilepath = "src/test/resources/expected/stylish-nested.txt";
+    final Path expectedPath = Paths.get(expectedFilepath);
+    final String expected = Files.readString(expectedPath);
+    final String actual = Differ.generate(filePath1, filePath2, "stylish");
+    assertEquals(expected, actual + System.lineSeparator());
+  }
+
+  @Test
+  void testDiffNestedYaml() throws IOException {
+    final String filePath1 = "src/test/resources/fixtures/file1-nested.yaml";
+    final String filePath2 = "src/test/resources/fixtures/file2-nested.yaml";
+    final String expectedFilepath = "src/test/resources/expected/stylish-nested.txt";
+    final Path expectedPath = Paths.get(expectedFilepath);
+    final String expected = Files.readString(expectedPath);
+    final String actual = Differ.generate(filePath1, filePath2, "stylish");
     assertEquals(expected, actual + System.lineSeparator());
   }
 }

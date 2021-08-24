@@ -10,19 +10,27 @@ import com.fasterxml.jackson.core.type.TypeReference;
 
 import java.io.IOException;
 
-class Parser {
+final class Parser {
+  private static Parser instance;
   private ObjectMapper objectMapper;
   private Path filePath;
 
-  Parser(String fPath) throws IOException {
-    this.filePath = Paths.get(fPath);
+  private Parser(String fPath) throws IOException {
+  }
+
+  public static Parser getParser(String fPath) throws IOException {
+    if (instance == null) {
+      instance = new Parser(fPath);
+    }
+    instance.filePath = Paths.get(fPath);
     if (fPath.endsWith("json")) {
-      this.objectMapper = new ObjectMapper();
+      instance.objectMapper = new ObjectMapper();
     } else if (fPath.endsWith("yaml")) {
-      this.objectMapper = new ObjectMapper(new YAMLFactory());
+      instance.objectMapper = new ObjectMapper(new YAMLFactory());
     } else {
       throw new IOException("Incorrect file format");
     }
+    return instance;
   }
 
   public Map<String, Object> parse() throws IOException {
