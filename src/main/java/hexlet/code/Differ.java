@@ -9,7 +9,7 @@ import java.util.LinkedHashMap;
 
 import com.fasterxml.jackson.core.JsonParseException;
 
-class Differ {
+public class Differ {
   private static Map<String, Object> makeNodeDiff(String type, Object before, Object after) {
     final Map<String, Object> diff = new HashMap<>();
     diff.put("type", type);
