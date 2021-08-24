@@ -25,7 +25,7 @@ final class Parser {
     instance.filePath = Paths.get(fPath);
     if (fPath.endsWith("json")) {
       instance.objectMapper = new ObjectMapper();
-    } else if (fPath.endsWith("yaml")) {
+    } else if (fPath.endsWith("yml")) {
       instance.objectMapper = new ObjectMapper(new YAMLFactory());
     } else {
       throw new IOException("Incorrect file format");

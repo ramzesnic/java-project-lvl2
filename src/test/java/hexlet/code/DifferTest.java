@@ -17,14 +17,14 @@ class DifferTest {
     final String expectedFilepath = "src/test/resources/expected/stylish-simple.txt";
     final Path expectedPath = Paths.get(expectedFilepath);
     final String expected = Files.readString(expectedPath);
-    final String actual = Differ.generate(filePath1, filePath2);
+    final String actual = Differ.generate(filePath1, filePath2, "stylish");
     assertEquals(expected, actual + System.lineSeparator());
   }
 
   @Test
   void testDiffSimpleYamlToStylish() throws IOException {
-    final String filePath1 = "src/test/resources/fixtures/file1-simple.yaml";
-    final String filePath2 = "src/test/resources/fixtures/file2-simple.yaml";
+    final String filePath1 = "src/test/resources/fixtures/file1-simple.yml";
+    final String filePath2 = "src/test/resources/fixtures/file2-simple.yml";
     final String expectedFilepath = "src/test/resources/expected/stylish-simple.txt";
     final Path expectedPath = Paths.get(expectedFilepath);
     final String expected = Files.readString(expectedPath);
@@ -45,8 +45,8 @@ class DifferTest {
 
   @Test
   void testDiffNestedYamlToStylish() throws IOException {
-    final String filePath1 = "src/test/resources/fixtures/file1-nested.yaml";
-    final String filePath2 = "src/test/resources/fixtures/file2-nested.yaml";
+    final String filePath1 = "src/test/resources/fixtures/file1-nested.yml";
+    final String filePath2 = "src/test/resources/fixtures/file2-nested.yml";
     final String expectedFilepath = "src/test/resources/expected/stylish-nested.txt";
     final Path expectedPath = Paths.get(expectedFilepath);
     final String expected = Files.readString(expectedPath);
@@ -67,8 +67,8 @@ class DifferTest {
 
   @Test
   void testDiffSimpleYamlToPlain() throws IOException {
-    final String filePath1 = "src/test/resources/fixtures/file1-simple.yaml";
-    final String filePath2 = "src/test/resources/fixtures/file2-simple.yaml";
+    final String filePath1 = "src/test/resources/fixtures/file1-simple.yml";
+    final String filePath2 = "src/test/resources/fixtures/file2-simple.yml";
     final String expectedFilepath = "src/test/resources/expected/plain-simple.txt";
     final Path expectedPath = Paths.get(expectedFilepath);
     final String expected = Files.readString(expectedPath);
@@ -89,8 +89,8 @@ class DifferTest {
 
   @Test
   void testDiffNestedYamlToPlain() throws IOException {
-    final String filePath1 = "src/test/resources/fixtures/file1-nested.yaml";
-    final String filePath2 = "src/test/resources/fixtures/file2-nested.yaml";
+    final String filePath1 = "src/test/resources/fixtures/file1-nested.yml";
+    final String filePath2 = "src/test/resources/fixtures/file2-nested.yml";
     final String expectedFilepath = "src/test/resources/expected/plain-nested.txt";
     final Path expectedPath = Paths.get(expectedFilepath);
     final String expected = Files.readString(expectedPath);
@@ -111,8 +111,8 @@ class DifferTest {
 
   @Test
   void testDiffSimpleYamlToJson() throws IOException {
-    final String filePath1 = "src/test/resources/fixtures/file1-simple.yaml";
-    final String filePath2 = "src/test/resources/fixtures/file2-simple.yaml";
+    final String filePath1 = "src/test/resources/fixtures/file1-simple.yml";
+    final String filePath2 = "src/test/resources/fixtures/file2-simple.yml";
     final String expectedFilepath = "src/test/resources/expected/json-simple.txt";
     final Path expectedPath = Paths.get(expectedFilepath);
     final String expected = Files.readString(expectedPath);
@@ -133,8 +133,8 @@ class DifferTest {
 
   @Test
   void testDiffNestedYamlToJson() throws IOException {
-    final String filePath1 = "src/test/resources/fixtures/file1-nested.yaml";
-    final String filePath2 = "src/test/resources/fixtures/file2-nested.yaml";
+    final String filePath1 = "src/test/resources/fixtures/file1-nested.yml";
+    final String filePath2 = "src/test/resources/fixtures/file2-nested.yml";
     final String expectedFilepath = "src/test/resources/expected/json-nested.txt";
     final Path expectedPath = Paths.get(expectedFilepath);
     final String expected = Files.readString(expectedPath);
