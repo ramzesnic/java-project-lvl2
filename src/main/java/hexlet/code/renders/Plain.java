@@ -15,7 +15,13 @@ public final class Plain implements RenderInterface {
   private Object getNodeValue(Map<String, Object> node, String key) {
     final Object value = node.get(key);
     final boolean isComplex = value instanceof ArrayList || value instanceof HashMap;
-    return isComplex ? "[complex value]" : value;
+    if (isComplex) {
+      return "[complex value]";
+    }
+    if (value instanceof String) {
+      return "\'" + value + "\'";
+    }
+    return value;
   }
 
   @Override
@@ -27,13 +33,13 @@ public final class Plain implements RenderInterface {
       final String nodeType = (String) node.get("type");
       switch (nodeType) {
         case "added" :
-          result.add("Property " + key + " was added with value " + this.getNodeValue(node, "after"));
+          result.add("Property \'" + key + "\' was added with value: " + this.getNodeValue(node, "after"));
           break;
         case "deleted" :
-          result.add("Property " + key + " was removed");
+          result.add("Property \'" + key + "\' was removed");
           break;
         case "changed" :
-          result.add("Property " + key + " was updated. From " + this.getNodeValue(node, "before") + " to "
+          result.add("Property \'" + key + "\' was updated. From " + this.getNodeValue(node, "before") + " to "
               + this.getNodeValue(node, "after"));
           break;
         default :
