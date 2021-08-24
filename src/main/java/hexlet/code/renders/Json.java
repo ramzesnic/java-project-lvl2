@@ -8,9 +8,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import hexlet.code.renders.interfaces.RenderInterface;
 
 public final class Json implements RenderInterface {
-  @Override
-  public String render(Map<String, Map<String, Object>> diff) throws JsonProcessingException {
-    final ObjectMapper objectMapper = new ObjectMapper();
-    return objectMapper.writeValueAsString(diff);
-  }
+    @Override
+    public String render(Map<String, Map<String, Object>> diff) throws JsonProcessingException {
+        final ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.writeValueAsString(diff);
+    }
 }
