@@ -7,8 +7,6 @@ import java.util.HashMap;
 import java.util.Set;
 import java.util.LinkedHashMap;
 
-import com.fasterxml.jackson.core.JsonParseException;
-
 public class Differ {
   private static Map<String, Object> makeNodeDiff(String type, Object before, Object after) {
     final Map<String, Object> diff = new HashMap<>();
@@ -36,7 +34,7 @@ public class Differ {
   }
 
   public static String generate(String filePath1, String filePath2, String format)
-      throws IOException, JsonParseException {
+      throws IOException {
     final Map<String, Object> fileData1 = Parser.getParser(filePath1).parse();
     final Map<String, Object> fileData2 = Parser.getParser(filePath2).parse();
 
