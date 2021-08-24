@@ -46,4 +46,9 @@ public class Differ {
     keys.stream().forEach(key -> addToDiff(key, fileData1, fileData2, diff));
     return Render.getRender(format).render(diff);
   }
+
+  public static String generate(String filePath1, String filePath2) throws IOException, JsonParseException {
+    final String defaultFormat = "stylish";
+    return generate(filePath1, filePath2, defaultFormat);
+  }
 }

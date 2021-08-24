@@ -17,7 +17,7 @@ class DifferTest {
     final String expectedFilepath = "src/test/resources/expected/stylish-simple.txt";
     final Path expectedPath = Paths.get(expectedFilepath);
     final String expected = Files.readString(expectedPath);
-    final String actual = Differ.generate(filePath1, filePath2, "stylish");
+    final String actual = Differ.generate(filePath1, filePath2);
     assertEquals(expected, actual + System.lineSeparator());
   }
 
