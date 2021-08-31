@@ -3,8 +3,6 @@ package hexlet.code;
 import java.io.IOException;
 import java.util.concurrent.Callable;
 
-import com.fasterxml.jackson.core.JsonParseException;
-
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
@@ -30,9 +28,6 @@ public class App implements Callable<Integer> {
         try {
             final String diff = Differ.generate(filePath1, filePath2, format);
             System.out.println(diff);
-
-        } catch (JsonParseException e) {
-            System.out.println(e.getMessage());
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }

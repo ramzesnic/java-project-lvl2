@@ -4,25 +4,25 @@ import java.util.Map;
 import java.util.Set;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import hexlet.code.Utils;
 import hexlet.code.renders.interfaces.RenderInterface;
 
 public final class Stylish implements RenderInterface {
+    private final String tab = " ";
+    private final int unchangerTabSize = 4;
+    private final int defaultTabSize = 2;
+    private final String unchangerTab = tab.repeat(unchangerTabSize);
+    private final String defaultTab = tab.repeat(defaultTabSize);
+
     @Override
     public String render(Map<String, Map<String, Object>> diff) {
-        final List<String> result = new ArrayList<>();
-        final String tab = " ";
-        final int unchangerTabSize = 4;
-        final int defaultTabSize = 2;
-        final String unchangerTab = tab.repeat(unchangerTabSize);
-        final String defaultTab = tab.repeat(defaultTabSize);
-        final Set<String> keys = Utils.getDicKeys(diff);
-        final Consumer<String> renderDiff = key -> {
+        final Set<String> keys = diff.keySet();
+        final Function<String, List<String>> renderDiff = key -> {
             final Map<String, Object> node = diff.get(key);
             final String nodeType = (String) node.get("type");
+            final List<String> result = new ArrayList<>();
             switch (nodeType) {
                 case "added" :
                     result.add(defaultTab + "+ " + key + ": " + node.get("after"));
@@ -40,10 +40,14 @@ public final class Stylish implements RenderInterface {
                 default :
                     break;
             }
+            return result;
         };
-        keys.stream().forEach(renderDiff);
-        return result.stream().collect(
-                Collectors.joining(System.lineSeparator(), "{" + System.lineSeparator(),
+
+        return keys.stream()
+                .map(renderDiff)
+                .flatMap(List::stream)
+                .collect(Collectors.joining(System.lineSeparator(),
+                        "{" + System.lineSeparator(),
                         System.lineSeparator() + "}"));
     }
 }

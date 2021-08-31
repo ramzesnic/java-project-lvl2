@@ -1,10 +1,13 @@
 package hexlet.code;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Map;
 import java.util.Objects;
 import java.util.HashMap;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.LinkedHashMap;
 
 public class Differ {
@@ -33,12 +36,16 @@ public class Differ {
         }
     }
 
-    public static String generate(String filePath1, String filePath2, String format)
-            throws IOException {
-        final Map<String, Object> fileData1 = Parser.getParser(filePath1).parse();
-        final Map<String, Object> fileData2 = Parser.getParser(filePath2).parse();
+    public static String generate(String filePath1, String filePath2, String format) throws IOException {
+        final String file1 = Files.readString(Paths.get(filePath1));
+        final String file2 = Files.readString(Paths.get(filePath2));
+        final String file1Ext = Utils.getFileExt(filePath1);
+        final String file2Ext = Utils.getFileExt(filePath1);
 
-        final Set<String> keys = Utils.getDicKeys(fileData1);
+        final Map<String, Object> fileData1 = Parser.getParser(file1, file1Ext).parse();
+        final Map<String, Object> fileData2 = Parser.getParser(file2, file2Ext).parse();
+
+        final Set<String> keys = new TreeSet<>(fileData1.keySet());
         keys.addAll(Utils.getDicKeys(fileData2));
         final Map<String, Map<String, Object>> diff = new LinkedHashMap<>();
         keys.stream().forEach(key -> addToDiff(key, fileData1, fileData2, diff));

@@ -1,7 +1,5 @@
 package hexlet.code;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Map;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -13,19 +11,19 @@ import java.io.IOException;
 final class Parser {
     private static Parser instance;
     private ObjectMapper objectMapper;
-    private Path filePath;
+    private String data;
 
-    private Parser(String fPath) {
+    private Parser() {
     }
 
-    public static Parser getParser(String fPath) throws IOException {
+    public static Parser getParser(String fileData, String type) throws IOException {
         if (instance == null) {
-            instance = new Parser(fPath);
+            instance = new Parser();
         }
-        instance.filePath = Paths.get(fPath);
-        if (fPath.endsWith("json")) {
+        instance.data = fileData;
+        if (type.equals("json")) {
             instance.objectMapper = new ObjectMapper();
-        } else if (fPath.endsWith("yml")) {
+        } else if (type.equals("yml")) {
             instance.objectMapper = new ObjectMapper(new YAMLFactory());
         } else {
             throw new IOException("Incorrect file format");
@@ -34,7 +32,7 @@ final class Parser {
     }
 
     public Map<String, Object> parse() throws IOException {
-        return this.objectMapper.readValue(this.filePath.toFile(), new TypeReference<Map<String, Object>>() {
+        return this.objectMapper.readValue(this.data, new TypeReference<Map<String, Object>>() {
         });
     }
 }
