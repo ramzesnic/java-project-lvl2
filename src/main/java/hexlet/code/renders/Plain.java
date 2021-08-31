@@ -28,17 +28,16 @@ public final class Plain implements RenderInterface {
         final Function<String, String> renderDiff = key -> {
             final Map<String, Object> node = diff.get(key);
             final String nodeType = (String) node.get("type");
-            switch (nodeType) {
-                case "added" :
-                    return "Property \'" + key + "\' was added with value: " + this.getNodeValue(node, "after");
-                case "deleted" :
-                    return "Property \'" + key + "\' was removed";
-                case "changed" :
-                    return "Property \'" + key + "\' was updated. From " + this.getNodeValue(node, "before") + " to "
-                            + this.getNodeValue(node, "after");
-                default :
-                    return "";
-            }
+            return switch (nodeType) {
+                case "added" -> "Property \'" + key + "\' was added with value: " + this.getNodeValue(node, "after");
+                case "deleted" -> "Property \'" + key + "\' was removed";
+                case "changed" -> "Property \'"
+                        + key + "\' was updated. From "
+                        + this.getNodeValue(node, "before")
+                        + " to "
+                        + this.getNodeValue(node, "after");
+                default -> "";
+            };
         };
         return keys.stream()
                 .map(renderDiff)
