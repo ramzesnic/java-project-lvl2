@@ -13,27 +13,31 @@ import java.util.LinkedHashMap;
 public class Differ {
     private static Map<String, Object> makeNodeDiff(String type, Object before, Object after) {
         final Map<String, Object> diff = new HashMap<>();
-        diff.put("type", type);
-        diff.put("before", before);
-        diff.put("after", after);
+        diff.put(Constants.NodeProps.TYPE, type);
+        diff.put(Constants.NodeProps.BEFORE, before);
+        diff.put(Constants.NodeProps.AFTER, after);
         return diff;
     }
 
-    private static void addToDiff(String key, Map<String, Object> dicOne, Map<String, Object> dicTwo,
-            Map<String, Map<String, Object>> diff) {
+    private static Map<String, Map<String, Object>> makeDiff(String key,
+            Map<String, Object> dicOne, Map<String, Object> dicTwo) {
+        final Map<String, Map<String, Object>> diff = new LinkedHashMap<>();
         if (!dicOne.containsKey(key) && dicTwo.containsKey(key)) {
-            final Map<String, Object> nodeDiff = makeNodeDiff("added", null, dicTwo.get(key));
+            final Map<String, Object> nodeDiff = makeNodeDiff(Constants.NodeTypes.ADDED, null, dicTwo.get(key));
             diff.put(key, nodeDiff);
         } else if (dicOne.containsKey(key) && !dicTwo.containsKey(key)) {
-            final Map<String, Object> nodeDiff = makeNodeDiff("deleted", dicOne.get(key), null);
+            final Map<String, Object> nodeDiff = makeNodeDiff(Constants.NodeTypes.DELETED, dicOne.get(key), null);
             diff.put(key, nodeDiff);
         } else if (!Objects.equals(dicOne.get(key), dicTwo.get(key))) {
-            final Map<String, Object> nodeDiff = makeNodeDiff("changed", dicOne.get(key), dicTwo.get(key));
+            final Map<String, Object> nodeDiff = makeNodeDiff(Constants.NodeTypes.CHANGED,
+                    dicOne.get(key),
+                    dicTwo.get(key));
             diff.put(key, nodeDiff);
         } else {
-            final Map<String, Object> nodeDiff = makeNodeDiff("unchanged", dicOne.get(key), null);
+            final Map<String, Object> nodeDiff = makeNodeDiff(Constants.NodeTypes.UNCHANGED, dicOne.get(key), null);
             diff.put(key, nodeDiff);
         }
+        return diff;
     }
 
     public static String generate(String filePath1, String filePath2, String format) throws IOException {
@@ -46,14 +50,16 @@ public class Differ {
         final Map<String, Object> fileData2 = Parser.getParser(file2, file2Ext).parse();
 
         final Set<String> keys = new TreeSet<>(fileData1.keySet());
-        keys.addAll(Utils.getDicKeys(fileData2));
-        final Map<String, Map<String, Object>> diff = new LinkedHashMap<>();
-        keys.stream().forEach(key -> addToDiff(key, fileData1, fileData2, diff));
+        keys.addAll(fileData2.keySet());
+        final Map<String, Map<String, Object>> diff = keys.stream()
+                .map(key -> makeDiff(key, fileData1, fileData2))
+                .flatMap(node -> node.entrySet().stream())
+                .collect(LinkedHashMap::new, (map, node) -> map.put(node.getKey(), node.getValue()), Map::putAll);
         return Render.getRender(format).render(diff);
     }
 
     public static String generate(String filePath1, String filePath2) throws IOException {
-        final String defaultFormat = "stylish";
+        final String defaultFormat = Constants.Formats.STYLISH;
         return generate(filePath1, filePath2, defaultFormat);
     }
 }

@@ -21,9 +21,9 @@ final class Parser {
             instance = new Parser();
         }
         instance.data = fileData;
-        if (type.equals("json")) {
+        if (type.equals(Constants.Parsers.JSON)) {
             instance.objectMapper = new ObjectMapper();
-        } else if (type.equals("yml")) {
+        } else if (type.equals(Constants.Parsers.YAML)) {
             instance.objectMapper = new ObjectMapper(new YAMLFactory());
         } else {
             throw new IOException("Incorrect file format");

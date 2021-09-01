@@ -11,16 +11,12 @@ import hexlet.code.renders.Json;
 
 class Render {
     public static RenderInterface getRender(String format) throws IOException, JsonProcessingException {
-        switch (format) {
-            case "stylish" :
-                return new Stylish();
-            case "plain" :
-                return new Plain();
-            case "json" :
-                return new Json();
+        return switch (format) {
+            case Constants.Formats.STYLISH -> new Stylish();
+            case Constants.Formats.PLAIN -> new Plain();
+            case Constants.Formats.JSON -> new Json();
 
-            default :
-                throw new IOException("Format not support.");
-        }
+            default -> throw new IOException("Format not support.");
+        };
     }
 }
