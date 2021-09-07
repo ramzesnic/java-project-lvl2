@@ -9,6 +9,11 @@ import hexlet.code.renders.interfaces.RenderInterface;
 import hexlet.code.Constants;
 
 public final class Plain implements RenderInterface {
+    private static final String ADDED = "Property \'%s\' was added with value: %s";
+    private static final String DELETED = "Property \'%s\' was removed";
+    private static final String CHANGED = "Property \'%s\' was updated. From %s to %s";
+    private static final String COMPLEX = "[complex value]";
+
     @Override
     public String render(Map<String, Map<String, Object>> diff) {
         return diff.entrySet().stream()
@@ -21,7 +26,7 @@ public final class Plain implements RenderInterface {
         final Object value = node.get(key);
         final boolean isComplex = value instanceof ArrayList || value instanceof HashMap;
         if (isComplex) {
-            return Constants.PlainMessages.COMPLEX;
+            return COMPLEX;
         }
         if (value instanceof String) {
             return "\'" + value + "\'";
@@ -34,11 +39,11 @@ public final class Plain implements RenderInterface {
         final String key = nodeDiff.getKey();
         final String nodeType = (String) node.get(Constants.NodeProps.TYPE);
         return switch (nodeType) {
-            case Constants.NodeTypes.ADDED -> String.format(Constants.PlainMessages.ADDED,
+            case Constants.NodeTypes.ADDED -> String.format(ADDED,
                     key,
                     this.getNodeValue(node, Constants.NodeProps.AFTER));
-            case Constants.NodeTypes.DELETED -> String.format(Constants.PlainMessages.DELETED, key);
-            case Constants.NodeTypes.CHANGED -> String.format(Constants.PlainMessages.CHANGED,
+            case Constants.NodeTypes.DELETED -> String.format(DELETED, key);
+            case Constants.NodeTypes.CHANGED -> String.format(CHANGED,
                     key,
                     this.getNodeValue(node, Constants.NodeProps.BEFORE),
                     this.getNodeValue(node, Constants.NodeProps.AFTER));

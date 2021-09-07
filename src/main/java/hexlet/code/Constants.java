@@ -1,13 +1,6 @@
 package hexlet.code;
 
 public final class Constants {
-    public final class PlainMessages {
-        public static final String ADDED = "Property \'%s\' was added with value: %s";
-        public static final String DELETED = "Property \'%s\' was removed";
-        public static final String CHANGED = "Property \'%s\' was updated. From %s to %s";
-        public static final String COMPLEX = "[complex value]";
-    }
-
     public final class NodeTypes {
         public static final String ADDED = "added";
         public static final String DELETED = "deleted";
